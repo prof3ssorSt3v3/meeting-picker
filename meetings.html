@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meeting Times</title>
+    <style>
+        html{
+            font-size: 36px;
+            line-height: 1;
+            font-family: sans-serif;
+        }
+        #output{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+        }
+        div{
+            border: 1px solid cornflowerblue;
+            flex-basis: auto;
+            flex-grow: 1;
+            margin: 0.5rem;
+        }
+        p:first-child{
+            font-weight: 300;
+            text-align: center;
+            color: #777;
+            padding: 0;
+            margin: 0.5rem;
+        }
+        p:nth-child(2){
+            font-weight: 900;
+            text-align: center;
+            color: #555;
+            margin: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <main id="output"></main>
+    <script>
+        let names = ['Jervin','Jordan','Kemi','Danilo','Marcus'];
+        let times = ['12:00pm', '12:30pm', '1:00pm', '1:30pm', '2:00pm'];
+        let hue = Math.floor(Math.random() * 360);
+        let delay = 1001;
+        
+        document.addEventListener('DOMContentLoaded', ()=>{
+            for(let i=0;i<names.length; i++){
+                let d = document.createElement('div');
+                let p1 = document.createElement('p');
+                let p2 = document.createElement('p');
+                p2.className = 'name';
+                p2.style.color = `hsl(${hue}, 90%, 40%)`;
+                hue += 60;
+                hue = hue>360?0:hue;
+                p1.textContent = times[i];
+                p2.textContent = names[i];
+                d.appendChild(p1);
+                d.appendChild(p2);
+                document.getElementById('output').appendChild(d);
+            }
+            swap(delay);
+        });
+        
+        const swap = (d) => {
+            let names = document.querySelectorAll('.name');
+            let num1 = Math.floor(Math.random() * names.length);
+            let num2 = Math.floor(Math.random() * names.length);
+            let p1 = names[num1];
+            let p2 = names[num2];
+            //console.log('swap', p1.textContent, p2.textContent);
+            let temp = p1.textContent;
+            p1.textContent = p2.textContent;
+            p2.textContent = temp;
+            if(d > 10){
+                setTimeout(swap, d, (d * 0.98));
+            }else{
+                document.getElementById('output').style.backgroundColor='gold';
+            }
+        }
+    </script>
+</body>
+</html>
